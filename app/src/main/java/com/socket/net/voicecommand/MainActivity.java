@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         CheckBox autoSend = (CheckBox) findViewById(R.id.autoSend);
         autoSend.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                                 @Override
@@ -102,12 +104,13 @@ public class MainActivity extends AppCompatActivity {
             PrintWriter out = new PrintWriter(new BufferedWriter(
                     new OutputStreamWriter(ClientThread.getSocket().getOutputStream())),
                     true);
+
             out.println(command);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (Exception e) {//////
             e.printStackTrace();
         }
     }
@@ -152,4 +155,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     /* for speech input */
+
 }
+

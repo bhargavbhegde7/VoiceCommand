@@ -34,6 +34,8 @@ public class ClientThread implements Runnable {
         return socket;
     }
 
+
+
     public static void endConnection(){
         try {
             socket.close();
@@ -49,10 +51,22 @@ public class ClientThread implements Runnable {
     @Override
     public void run() {
 
+
         try {
             InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
 
-            this.socket = new Socket(serverAddr, SERVERPORT);
+            socket = new Socket(serverAddr, SERVERPORT);
+
+            //Get reply back from the server
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            //Assign it to a variable
+            String serverResponse = in.readLine();
+
+            //Print the response
+            System.out.println(serverResponse);
+
+
+
 
         } catch (UnknownHostException e1) {
             e1.printStackTrace();
