@@ -15,6 +15,7 @@ import java.net.Socket;
  * Created by bhegde on 20-06-2016.
  */
 public class TCPClient {
+    private static final int PORT = 12348;
     private static final String TAG = "TCPClient";
     private final Handler mHandler;
     private String ipNumber, incomingMessage, command;
@@ -59,22 +60,9 @@ public class TCPClient {
 
             Log.d(TAG, "Connecting...");
 
-            /**
-             * Sending empty message with static int value from Main2Activity
-             * to update UI ( 'Connecting...' ).
-             *
-             * @see com.example.turnmeoff.Main2Activity.CONNECTING
-             */
             mHandler.sendEmptyMessageDelayed(Main2Activity.CONNECTING,1000);
 
-            /**
-             * Here the socket is created with hardcoded port.
-             * Also the port is given in IpGetter class.
-             *
-             * @see com.example.turnmeoff.IpGetter
-             */
-            Socket socket = new Socket(serverAddress, 12348);
-
+            Socket socket = new Socket(serverAddress, PORT);
 
             try {
 
@@ -86,23 +74,18 @@ public class TCPClient {
 
                 Log.d(TAG, "In/Out created");
 
-                //Sending message with command specified by AsyncTask
                 this.sendMessage(command);
 
-                //
                 mHandler.sendEmptyMessageDelayed(Main2Activity.SENDING,2000);
 
                 //Listen for the incoming messages while mRun = true
                 while (mRun) {
                     incomingMessage = in.readLine();
-                    if (incomingMessage != null && listener != null) {
+                    if (incomingMessage != null && listener != null && !"\n".equals(incomingMessage )) {
 
-                        /**
-                         * Incoming message is passed to MessageCallback object.
-                         * Next it is retrieved by AsyncTask and passed to onPublishProgress method.
-                         *
-                         */
                         listener.callbackMessageReceiver(incomingMessage);
+
+                        System.out.println("Server reply : "+incomingMessage);
 
                     }
                     incomingMessage = null;
