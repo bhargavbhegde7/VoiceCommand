@@ -2,6 +2,8 @@ package com.socket.net.voicecommand;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -81,7 +83,31 @@ public class MainActivity extends AppCompatActivity {
                 ClientThread.setServerIp(serverIp);
                 ClientThread.setSERVERPORT(serverPort);
 
-                new Thread(new ClientThread()).start();
+                //new Thread(new ClientThread()).start();
+
+
+                Handler handler = new Handler(){
+                    public void handleMessage(Message msg){
+//                switch(msg.what){
+//                    case 1 :
+//                        Log.d(TAG, "In Handler's shutdown");
+//
+//                        System.out.println("Main2Activity : handling SHUTDOWN");
+//
+//                        break;
+//                }//switch
+                        System.out.println(msg);
+                    }//handleMessage
+                };
+
+                //new AsynchConnectionTask(handler, "Hakuna Matata...!!").execute();
+                new AsynchConnectionTask(handler, "Hakuna Matata...!!").execute();
+
+
+
+
+
+
                 Toast.makeText(getApplicationContext(),"Looks like Connected",Toast.LENGTH_SHORT);
             }
         });

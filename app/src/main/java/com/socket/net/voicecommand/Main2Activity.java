@@ -26,14 +26,15 @@ public class Main2Activity extends AppCompatActivity {
 
         Handler handler = new Handler(){
             public void handleMessage(Message msg){
-                switch(msg.what){
-                    case 5 :
-                        Log.d(TAG, "In Handler's shutdown");
-
-                        System.out.println("Main2Activity : handling SHUTDOWN");
-
-                        break;
-                }//switch
+//                switch(msg.what){
+//                    case 1 :
+//                        Log.d(TAG, "In Handler's shutdown");
+//
+//                        System.out.println("Main2Activity : handling SHUTDOWN");
+//
+//                        break;
+//                }//switch
+                System.out.println(msg);
             }//handleMessage
         };
 
