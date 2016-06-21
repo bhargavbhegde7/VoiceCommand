@@ -16,7 +16,7 @@ import java.net.Socket;
  * Created by bhegde on 20-06-2016.
  */
 public class TCPClient {
-    private static final int PORT = 12347;
+    private static final int PORT = 12345;
     private static final String TAG = "TCPClient";
     private final Handler mHandler;
     private String ipNumber, incomingMessage, command;
