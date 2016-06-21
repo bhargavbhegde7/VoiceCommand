@@ -1,6 +1,7 @@
 package com.socket.net.voicecommand;
 
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -15,7 +16,7 @@ import java.net.Socket;
  * Created by bhegde on 20-06-2016.
  */
 public class TCPClient {
-    private static final int PORT = 12348;
+    private static final int PORT = 12345;
     private static final String TAG = "TCPClient";
     private final Handler mHandler;
     private String ipNumber, incomingMessage, command;
@@ -26,6 +27,12 @@ public class TCPClient {
 
     public TCPClient(Handler mHandler, String command, String ipNumber, MessageCallback listener) {
         this.listener         = listener;
+        this.ipNumber         = ipNumber;
+        this.command          = command ;
+        this.mHandler         = mHandler;
+    }
+    public TCPClient(Handler mHandler, String command, String ipNumber) {
+
         this.ipNumber         = ipNumber;
         this.command          = command ;
         this.mHandler         = mHandler;
@@ -60,39 +67,45 @@ public class TCPClient {
 
             Log.d(TAG, "Connecting...");
 
-            mHandler.sendEmptyMessageDelayed(Main2Activity.CONNECTING,1000);
+           // mHandler.sendEmptyMessageDelayed(Main2Activity.CONNECTING,1000);
 
             Socket socket = new Socket(serverAddress, PORT);
 
             try {
 
                 // Create PrintWriter object for sending messages to server.
-                out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+               // out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 
                 //Create BufferedReader object for receiving messages from server.
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 Log.d(TAG, "In/Out created");
 
-                this.sendMessage(command);
+                //this.sendMessage(command);
 
-                mHandler.sendEmptyMessageDelayed(Main2Activity.SENDING,2000);
+               // mHandler.sendEmptyMessageDelayed(Main2Activity.SENDING,2000);
 
                 //Listen for the incoming messages while mRun = true
-                while (mRun) {
-                    incomingMessage = in.readLine();
-                    if (incomingMessage != null && listener != null && !"\n".equals(incomingMessage )) {
+                //while (mRun) {
+                   incomingMessage = in.readLine();
+                //System.out.println(incomingMessage);
+                System.out.println("abc");
+                   // if (incomingMessage != null && listener != null && !"\n".equals(incomingMessage )) {
+                       // if (incomingMessage != null && listener != null && !"\n".equals(incomingMessage )) {
 
-                        listener.callbackMessageReceiver(incomingMessage);
+                        //listener.callbackMessageReceiver(incomingMessage);
 
                         System.out.println("Server reply : "+incomingMessage);
 
-                    }
-                    incomingMessage = null;
+                    //}
+                  //  incomingMessage = null;
 
-                }
+               // }
 
                 Log.d(TAG, "Received Message: " +incomingMessage);
+                Message m = new Message();
+                m.what = 1;
+                mHandler.sendMessage(m);
 
             } catch (Exception e) {
 
